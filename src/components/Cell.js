@@ -1,8 +1,9 @@
 import React from "react";
+import "../styles/Cell.css";
 
 const cell = (props) => {
   return (
-    <td>{props.value}</td>
+    <td className={props.value === 1 ? "alive" : "dead"}>&nbsp;</td>
   );
 }
 

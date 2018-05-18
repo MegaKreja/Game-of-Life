@@ -1,5 +1,4 @@
 import React from "react";
-import Cell from "./Cell";
 import "../styles/Grid.css";
 
 const grid = (props) => {
