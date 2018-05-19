@@ -61,7 +61,6 @@ class App extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     console.log(prevState);
-    
   }
 
   updateTable = () => {
@@ -82,10 +81,66 @@ class App extends Component {
           let count = 0;
           colKey++;
           // edges
-          if(i === 0 || i === 20 - 1 || j === 0 || j === 20 - 1) {
-            count = 0;
-          } else {
-            // rest
+          if(i === 0 || i === 19 || j === 0 || j === 19) {
+            // left top 
+            if(i === 0 && j === 0) {
+              count += table[i].props.children[j + 1].props.value;
+              count += table[i + 1].props.children[j + 1].props.value;
+              count += table[i + 1].props.children[j].props.value;
+            }
+            // top
+            else if(i === 0 && j > 0 && j < 19) {
+              count += table[i].props.children[j - 1].props.value;
+              count += table[i + 1].props.children[j - 1].props.value;
+              count += table[i + 1].props.children[j].props.value;
+              count += table[i + 1].props.children[j + 1].props.value;
+              count += table[i].props.children[j + 1].props.value;
+            }
+            // right top
+            else if(i === 0 && j === 19) {
+              count += table[i].props.children[j - 1].props.value;
+              count += table[i + 1].props.children[j - 1].props.value;
+              count += table[i + 1].props.children[j].props.value;
+            }
+            // right side
+            else if(j === 19 && i > 0 && i < 19) {
+              count += table[i - 1].props.children[j].props.value;
+              count += table[i - 1].props.children[j - 1].props.value;
+              count += table[i].props.children[j - 1].props.value;
+              count += table[i + 1].props.children[j - 1].props.value;
+              count += table[i + 1].props.children[j].props.value;
+            }
+            // bottom right
+            else if(i === 19 && j === 19) {
+              count += table[i].props.children[j - 1].props.value;
+              count += table[i - 1].props.children[j - 1].props.value;
+              count += table[i - 1].props.children[j].props.value;
+            }
+            // bottom
+            else if(i === 19 && j > 0 && j < 19) {
+              count += table[i - 1].props.children[j].props.value;
+              count += table[i - 1].props.children[j - 1].props.value;
+              count += table[i].props.children[j - 1].props.value;
+              count += table[i].props.children[j + 1].props.value;
+              count += table[i - 1].props.children[j + 1].props.value;
+            }
+            // bottom left
+            else if(i === 19 && j === 0) {
+              count += table[i].props.children[j + 1].props.value;
+              count += table[i - 1].props.children[j + 1].props.value;
+              count += table[i - 1].props.children[j].props.value;
+            }
+            // left side
+            else if(j === 0 && i > 0 && i < 19) {
+              count += table[i - 1].props.children[j].props.value;
+              count += table[i - 1].props.children[j + 1].props.value;
+              count += table[i].props.children[j + 1].props.value;
+              count += table[i + 1].props.children[j].props.value;
+              count += table[i + 1].props.children[j + 1].props.value;
+            }
+          }
+          // rest 
+          else {
             count += table[i - 1].props.children[j].props.value;
             count += table[i - 1].props.children[j - 1].props.value;
             count += table[i + 1].props.children[j + 1].props.value;
@@ -119,7 +174,7 @@ class App extends Component {
     return (
       <div className="container">
         <h1>John Conway's Game of Life</h1>
-        <h2>Generations: {this.state.generations}</h2> {/* ovde ce se naslediti brojno stanje*/}
+        <h2>Generations: {this.state.generations}</h2>
         <ControlBar 
           play={this.handlePlay}
           pause={this.handlePause}
