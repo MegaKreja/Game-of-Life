@@ -63,6 +63,21 @@ class App extends Component {
     console.log(prevState);
   }
 
+  changeCell = (i, j) => {
+    console.log(i, j);
+    let table = this.state.table.slice();
+    let selectedCell = table[i].props.children.props.value;
+    table[i].props.children[j].props.value = 1;
+    console.log(selectedCell);
+    if(selectedCell === 0) {
+      selectedCell = 1;
+    } else if(selectedCell === 1) {
+      selectedCell = 0;
+    }
+    console.log(selectedCell);
+    this.setState({table: table});
+  }
+
   updateTable = () => {
     if(this.state.playing) {
       let table = this.state.table.slice();
@@ -155,7 +170,7 @@ class App extends Component {
           } else {
             cell = 0;
           }
-          cells.push(<Cell key={colKey} value={cell} />)
+          cells.push(<Cell changeCell={this.changeCell} i={i} j={j} key={colKey} value={cell} />)
         }
         rowKey++;
         copy.push(<tr key={rowKey}>{cells}</tr>)
