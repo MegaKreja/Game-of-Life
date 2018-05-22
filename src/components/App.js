@@ -174,10 +174,19 @@ class App extends Component {
             count += table[i + 1].props.children[j - 1].props.value;
             count += table[i + 1].props.children[j].props.value;
           }
-          if(count === 3) {
-            cell = 1;
-          } else {
-            cell = 0;
+          if(cell === 1) {
+            if(count === 2 || count === 3) {
+              cell = 1;
+            } else {
+              cell = 0;
+            }
+          }
+          else {
+            if(count === 3) {
+              cell = 1;
+            } else {
+              cell = 0;
+            }
           }
           cells.push(<Cell changeCell={this.changeCell} i={i} j={j} key={colKey} value={cell} />)
         }
