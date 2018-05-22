@@ -30,7 +30,7 @@ class App extends Component {
       let cells = []
       for (let j = 0; j < 20; j++) {
         colKey++;
-        cells.push(<Cell key={colKey} value={Math.floor(Math.random() * 2)}/>)
+        cells.push(<Cell changeCell={this.changeCell} i={i} j={j} key={colKey} value={Math.floor(Math.random() * 2)}/>)
       }
       rowKey++;
       table.push(<tr key={rowKey}>{cells}</tr>)
@@ -50,7 +50,7 @@ class App extends Component {
       let cells = []
       for (let j = 0; j < 20; j++) {
         colKey++;
-        cells.push(<Cell key={colKey} value={0} />)
+        cells.push(<Cell changeCell={this.changeCell} i={i} j={j} key={colKey} value={0} />)
       }
       rowKey++;
       table.push(<tr key={rowKey}>{cells}</tr>)
@@ -63,19 +63,28 @@ class App extends Component {
     console.log(prevState);
   }
 
-  changeCell = (i, j) => {
-    console.log(i, j);
+  changeCell = (indexI, indexJ) => {
+    console.log(indexI, indexJ);
     let table = this.state.table.slice();
-    let selectedCell = table[i].props.children.props.value;
-    table[i].props.children[j].props.value = 1;
-    console.log(selectedCell);
-    if(selectedCell === 0) {
-      selectedCell = 1;
-    } else if(selectedCell === 1) {
-      selectedCell = 0;
+    let copy = [];
+    let rowKey = 0;
+    let colKey = 0;
+    for(let i = 0; i < 20; i++) {
+      let cells = [];
+      for(let j = 0; j < 20; j++) {
+        let cell = table[i].props.children[j].props.value;
+        colKey++;
+        if(i === indexI && j === indexJ) {
+          cells.push(<Cell changeCell={this.changeCell} i={i} j={j} key={colKey} value={cell === 0 ? 1 : 0} />)
+        } else {
+          cells.push(<Cell changeCell={this.changeCell} i={i} j={j} key={colKey} value={cell} />)
+        }
+      }
+      rowKey++;
+      copy.push(<tr key={rowKey}>{cells}</tr>)
     }
-    console.log(selectedCell);
-    this.setState({table: table});
+    console.log(copy);
+    this.setState({table: copy});
   }
 
   updateTable = () => {
